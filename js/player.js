@@ -28,10 +28,11 @@ class Player {
   }
 
   _giveStarterItems() {
-    this.addItem(B.DIRT, 64);
-    this.addItem(B.PLANKS, 32);
-    this.addItem(B.TORCH, 16);
-    this.addItem(B.GLASS, 8);
+    this.addItem(B.WOOD, 32);
+    this.addItem(B.DIRT, 32);
+    this.addItem(B.PLANKS, 16);
+    this.addItem(B.STONE, 16);
+    this.addItem(B.TORCH, 8);
   }
 
   addItem(id, count = 1) {

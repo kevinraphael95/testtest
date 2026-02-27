@@ -69,6 +69,11 @@ class Game {
         if (this.craftUI.open) this.craftUI.close();
         else this.ui.toggleInventory();
       }
+      // C = open crafting directly
+      if (e.key === 'c' || e.key === 'C') {
+        if (this.craftUI.open) this.craftUI.close();
+        else { this.ui.closeInventory(); this.craftUI.openUI(); }
+      }
 
       if (e.key === 'Escape') {
         if (this.craftUI.open) this.craftUI.close();
