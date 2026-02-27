@@ -30,19 +30,30 @@ class Game {
     document.getElementById('screen-main-menu').classList.remove('active');
     document.getElementById('screen-game').classList.add('active');
 
-    this.world    = new World();
-    this.player   = new Player(this.world);
-    this.renderer = new Renderer(this.canvas);
-    this.ui       = new UI(this.player);
-    this.craftUI  = new CraftingUI(this.player, this.ui);
+    // Use rAF so DOM is painted before we read dimensions
+    requestAnimationFrame(() => {
+      this.world    = new World();
+      this.player   = new Player(this.world);
+      this.renderer = new Renderer(this.canvas);
+      this.ui       = new UI(this.player);
+      this.craftUI  = new CraftingUI(this.player, this.ui);
 
-    this.renderer.scale = Math.max(1, Math.floor(window.innerHeight / (TILE * 15)));
+      this.renderer.scale = Math.max(1, Math.floor(window.innerHeight / (TILE * 15)));
+      this.renderer.resize();
 
-    this._bindInputs();
-    this.running = true;
-    this.lastTime = performance.now();
-    this._loop(this.lastTime);
-    this.ui.updateHotbar();
+      // Snap camera to player immediately (no lag)
+      const cx = this.player.cx - this.renderer.vw / (2 * this.renderer.scale);
+      const cy = this.player.cy - this.renderer.vh / (2 * this.renderer.scale);
+      const maxY = WORLD_H * TILE - this.renderer.vh / this.renderer.scale;
+      this.renderer.camX = cx;
+      this.renderer.camY = Math.max(0, Math.min(maxY, cy));
+
+      this._bindInputs();
+      this.running = true;
+      this.lastTime = performance.now();
+      this._loop(this.lastTime);
+      this.ui.updateHotbar();
+    });
   }
 
   _bindInputs() {
