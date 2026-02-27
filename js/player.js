@@ -69,11 +69,11 @@ class Player {
   update(keys) {
     // Horizontal movement
     this.vx = 0;
-    if (keys['ArrowLeft'] || keys['a'] || keys['A']) this.vx = -PLAYER_SPEED;
+    if (keys['ArrowLeft'] || keys['q'] || keys['Q']) this.vx = -PLAYER_SPEED;
     if (keys['ArrowRight'] || keys['d'] || keys['D']) this.vx = PLAYER_SPEED;
 
     // Jump
-    if ((keys['ArrowUp'] || keys['w'] || keys['W'] || keys[' ']) && this.onGround) {
+    if ((keys['ArrowUp'] || keys['z'] || keys['Z'] || keys[' ']) && this.onGround) {
       this.vy = JUMP_FORCE;
       this.onGround = false;
     }

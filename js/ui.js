@@ -72,13 +72,13 @@ class UI {
 
   openInventory() {
     this.invOpen = true;
-    this.inventoryEl.classList.remove('hidden');
+    this.inventoryEl.classList.add('open');
     this._renderInventory();
   }
 
   closeInventory() {
     this.invOpen = false;
-    this.inventoryEl.classList.add('hidden');
+    this.inventoryEl.classList.remove('open');
   }
 
   toggleInventory() {
