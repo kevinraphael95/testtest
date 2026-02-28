@@ -7,96 +7,79 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="ui-overlay">
 
-    <!-- ═══ MENU PRINCIPAL ═══ -->
-    <div id="screen-main-menu" class="screen active">
-      <div class="menu-bg"></div>
-      <div class="menu-content">
-        <h1 class="game-title">⛏ MINECRAFT 2D</h1>
-        <p class="subtitle">clone pixel-art</p>
-
-        <button class="btn-primary" id="btn-solo">▶ Solo</button>
-        <button class="btn-multiplayer" id="btn-multi">🌐 Multijoueur</button>
-        <button class="btn-secondary" id="btn-controls">🎮 Contrôles</button>
-
-        <div id="controls-panel" class="hidden">
-          <div class="controls-grid">
-            <span>ZQSD / Flèches</span><span>Déplacer</span>
-            <span>Z / Espace</span><span>Sauter</span>
-            <span>Clic Gauche</span><span>Miner</span>
-            <span>Clic Droit</span><span>Placer</span>
-            <span>1-9 / Molette</span><span>Hotbar</span>
-            <span>E</span><span>Inventaire</span>
-            <span>C</span><span>Crafting</span>
-            <span>Échap</span><span>Fermer menu</span>
-          </div>
+  <!-- ═══ MENU PRINCIPAL ═══ -->
+  <div id="screen-main-menu" class="screen active">
+    <div class="menu-bg"></div>
+    <div class="menu-content">
+      <h1 class="game-title">⛏ MINECRAFT 2D</h1>
+      <p class="subtitle">clone pixel-art</p>
+      <button class="btn-primary"      id="btn-solo">▶ Solo</button>
+      <button class="btn-multiplayer"  id="btn-multi">🌐 Multijoueur</button>
+      <button class="btn-secondary"    id="btn-controls">🎮 Contrôles</button>
+      <div id="controls-panel" class="hidden">
+        <div class="controls-grid">
+          <span>ZQSD / Flèches</span><span>Déplacer</span>
+          <span>Z / Espace</span><span>Sauter</span>
+          <span>Clic Gauche</span><span>Miner</span>
+          <span>Clic Droit</span><span>Placer</span>
+          <span>1-9 / Molette</span><span>Hotbar</span>
+          <span>E</span><span>Inventaire</span>
+          <span>C</span><span>Crafting</span>
+          <span>Échap</span><span>Fermer menu</span>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- ═══ ÉCRAN MULTIJOUEUR ═══ -->
-    <div id="screen-multi" class="screen">
-      <div class="menu-bg"></div>
-      <div class="menu-content">
-        <h2 class="game-title" style="font-size:1rem">🌐 MULTIJOUEUR</h2>
-
-        <div class="multi-status" id="multi-config-status">
-          Entrez vos identifiants Supabase
+  <!-- ═══ ÉCRAN MULTIJOUEUR ═══ -->
+  <div id="screen-multi" class="screen">
+    <div class="menu-bg"></div>
+    <div class="menu-content">
+      <h2 class="game-title" style="font-size:1rem">🌐 MULTIJOUEUR</h2>
+      <div class="multi-status" id="multi-config-status">Entrez vos identifiants Supabase</div>
+      <div class="multi-form">
+        <label>Pseudo</label>
+        <input type="text" id="input-pseudo" placeholder="Ton pseudo..." maxlength="16" value="Joueur">
+        <label>Supabase URL</label>
+        <input type="text" id="input-url" placeholder="https://xxx.supabase.co">
+        <label>Supabase Anon Key</label>
+        <input type="text" id="input-key" placeholder="eyJhbGci...">
+        <div class="multi-hint">
+          💡 Compte gratuit sur <strong>supabase.com</strong> — pas de carte de crédit
         </div>
+      </div>
+      <button class="btn-primary"   id="btn-join-multi">🌐 Rejoindre</button>
+      <button class="btn-secondary" id="btn-back-menu">← Retour</button>
+      <div class="multi-setup-steps hidden" id="multi-steps">
+        <p>📋 Comment créer un serveur :</p>
+        <ol>
+          <li>supabase.com → compte Google</li>
+          <li>New Project → Europe</li>
+          <li>SQL Editor → coller le script</li>
+          <li>Settings → API Keys (Legacy) → copier URL + anon key</li>
+        </ol>
+        <button class="btn-secondary btn-small" id="btn-copy-sql">📋 Copier le SQL</button>
+      </div>
+      <button class="btn-link" id="btn-show-steps">Pas encore de compte ?</button>
+    </div>
+  </div>
 
-        <div class="multi-form">
-          <label>Pseudo</label>
-          <input type="text" id="input-pseudo" placeholder="Ton pseudo..." maxlength="16" value="Joueur">
-
-          <label>Supabase URL</label>
-          <input type="text" id="input-url" placeholder="https://xxx.supabase.co">
-
-          <label>Supabase Anon Key</label>
-          <input type="text" id="input-key" placeholder="eyJhbGci...">
-
-          <div class="multi-hint">
-            💡 Compte gratuit sur <strong>supabase.com</strong><br>
-            Pas de carte de crédit requis
-          </div>
-        </div>
-
-        <button class="btn-primary" id="btn-join-multi">🌐 Rejoindre</button>
-        <button class="btn-secondary" id="btn-back-menu">← Retour</button>
-
-        <div class="multi-setup-steps hidden" id="multi-steps">
-          <p>📋 Comment créer un serveur :</p>
-          <ol>
-            <li>supabase.com → compte Google</li>
-            <li>New Project → Europe</li>
-            <li>SQL Editor → coller le script</li>
-            <li>Settings → API → copier URL + anon key</li>
-          </ol>
-          <button class="btn-secondary btn-small" id="btn-copy-sql">📋 Copier le SQL</button>
-        </div>
-        <button class="btn-link" id="btn-show-steps">Pas encore de compte ?</button>
+  <!-- ═══ JEU ═══ (toujours dans le DOM, juste caché) -->
+  <div id="screen-game" class="screen">
+    <canvas id="game-canvas"></canvas>
+    <div id="hud">
+      <div id="hotbar"></div>
+      <div id="health-bar"><span id="health-display">❤ 20/20</span></div>
+    </div>
+    <div id="inventory-screen">
+      <div id="inventory-panel">
+        <h3>Inventaire</h3>
+        <div id="inventory-grid"></div>
+        <button id="btn-close-inv">✕ Fermer</button>
       </div>
     </div>
-
-    <!-- ═══ JEU ═══ -->
-    <div id="screen-game" class="screen">
-      <canvas id="game-canvas"></canvas>
-      <div id="hud">
-        <div id="hotbar"></div>
-        <div id="health-bar">
-          <span id="health-display">❤ 20/20</span>
-        </div>
-      </div>
-      <div id="inventory-screen">
-        <div id="inventory-panel">
-          <h3>Inventaire</h3>
-          <div id="inventory-grid"></div>
-          <button id="btn-close-inv">✕ Fermer</button>
-        </div>
-      </div>
-      <div id="tooltip"></div>
-    </div>
-
+    <div id="tooltip"></div>
   </div>
 
   <script src="js/constants.js"></script>

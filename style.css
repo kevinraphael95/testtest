@@ -17,13 +17,22 @@ body {
 }
 
 .screen {
-  position: absolute;
+  position: fixed;
   inset: 0;
   display: none;
   pointer-events: all;
 }
 
-.screen.active { display: flex; align-items: center; justify-content: center; }
+.screen.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Game screen is block not flex */
+#screen-game.active {
+  display: block;
+}
 
 /* ---- MAIN MENU ---- */
 .menu-bg {
@@ -615,14 +624,4 @@ body {
   line-height: 2.2;
 }
 
-/* Override - inventory screen starts hidden */
-#inventory-screen {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  pointer-events: all;
-}
-#inventory-screen.open { display: flex; }
+
