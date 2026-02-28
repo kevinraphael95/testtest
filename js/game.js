@@ -86,7 +86,15 @@ create policy "pub delete" on blocks for delete using (true);`;
     document.getElementById('screen-multi').classList.remove('active');
     document.getElementById('screen-game').classList.add('active');
 
-    requestAnimationFrame(() => {
+    // Pre-fill from config.js if available
+    if (window.CONFIG?.SUPABASE_URL) {
+      const urlEl = document.getElementById('input-url');
+      const keyEl = document.getElementById('input-key');
+      if (urlEl && !urlEl.value) urlEl.value = CONFIG.SUPABASE_URL;
+      if (keyEl && !keyEl.value) keyEl.value = CONFIG.SUPABASE_KEY;
+    }
+    // Double rAF: first paints the screen, second reads correct dimensions
+    requestAnimationFrame(() => requestAnimationFrame(() => {
       this.world    = new World();
       this.player   = new Player(this.world);
       this.renderer = new Renderer(this.canvas);
@@ -115,7 +123,7 @@ create policy "pub delete" on blocks for delete using (true);`;
       this.lastTime = performance.now();
       this._loop(this.lastTime);
       this.ui.updateHotbar();
-    });
+    }));
   }
 
   _bindInputs() {
