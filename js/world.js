@@ -136,6 +136,7 @@ class World {
     this.seed   = Math.floor(Math.random() * 100000);
     this.chunks = new Map();  // key: chunk X index
     this._modifications = new Map(); // key: "wx,y" => block id (player edits override gen)
+    this._gravityPending = new Set();
     // Pre-generate around spawn
     for (let cx = -4; cx <= 4; cx++) this._loadChunk(cx);
   }
@@ -206,6 +207,34 @@ class World {
     if (this.get(wx, y) !== B.AIR) return false;
     this.set(wx, y, id);
     return true;
+  }
+
+
+  // ---- Gravity (sand, gravel) ----
+  scheduleGravity(wx, y) {
+    if (y < 0 || y >= WORLD_H) return;
+    const id = this.get(wx, y);
+    if (id === B.SAND || id === B.GRAVEL) {
+      this._gravityPending.add(`${wx},${y}`);
+    }
+  }
+
+  tickGravity() {
+    if (!this._gravityPending) this._gravityPending = new Set();
+    if (this._gravityPending.size === 0) return;
+    const toProcess = [...this._gravityPending];
+    this._gravityPending.clear();
+    for (const key of toProcess) {
+      const [wx, y] = key.split(',').map(Number);
+      const id = this.get(wx, y);
+      if (id !== B.SAND && id !== B.GRAVEL) continue;
+      if (y + 1 >= WORLD_H) continue;
+      if (this.get(wx, y + 1) === B.AIR) {
+        this.set(wx, y + 1, id);
+        this.set(wx, y, B.AIR);
+        this._gravityPending.add(`${wx},${y + 1}`);
+      }
+    }
   }
 
   // Ensure chunks are loaded around a world X position
