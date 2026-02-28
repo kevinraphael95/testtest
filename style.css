@@ -13,7 +13,7 @@ body {
   position: fixed;
   inset: 0;
   z-index: 10;
-  pointer-events: none;
+  pointer-events: none; /* children override this */
 }
 
 .screen {
@@ -29,10 +29,8 @@ body {
   justify-content: center;
 }
 
-/* Game screen is block not flex */
-#screen-game.active {
-  display: block;
-}
+#screen-game { display: none !important; }
+#screen-game.active { display: block !important; }
 
 /* ---- MAIN MENU ---- */
 .menu-bg {
@@ -118,8 +116,6 @@ body {
 .hidden { display: none !important; }
 
 /* ---- GAME ---- */
-#screen-game { display: none; }
-#screen-game.active { display: block; }
 
 #game-canvas {
   display: block;
